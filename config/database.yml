@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool:     <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV["PG_USERNAME"] %>
+  password: <%= ENV["PG_PASSWORD"] %>
+  host:     <%= ENV["PG_HOST"] %>
+  port:     <%= ENV["PG_PORT"] %>
+
+development:
+  <<: *default
+  database: <%= ENV["PG_DBNAME"] || 'rails_app_development' %>
+
+test:
+  <<: *default
+  database: rails_app_test
+
+production:
+  <<: *default
+  database: rails_app_production
