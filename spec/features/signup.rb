@@ -16,7 +16,6 @@ feature 'Sign up' do
 
   context 'when email is blank' do
     scenario 'redirects to users path sign up page' do
-      # byebug
       test_user[:email] =""
       sign_up(test_user)
       expect(current_path).to eq('/users')
@@ -31,7 +30,6 @@ feature 'Sign up' do
 
   context 'when password confirmation doesn\'t match password' do
     scenario 'redirects to users path sign up page' do
-      # byebug
       test_user[:password_confirmation] = "wrong-password"
       sign_up(test_user)
       expect(current_path).to eq('/users')
