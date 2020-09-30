@@ -2,8 +2,10 @@
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
+
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
+
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'capybara/rails'
@@ -21,6 +23,7 @@ require 'capybara/rails'
 # require only the support files necessary.
 #
 # Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+require 'helpers/helpers'
 require 'support/factory_bot'
 require 'support/faker'
 # Checks for pending migrations and applies them before tests are run.
@@ -62,4 +65,8 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  config.include Warden::Test::Helpers
+  config.include Devise::Test::IntegrationHelpers
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include TestHelper
 end
