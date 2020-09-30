@@ -20,12 +20,12 @@ gem 'jquery-turbolinks'
 gem 'devise-bootstrap-views', '~> 1.0'
 ```
 
-But also need to adjust `rails_app/app/assets/stylesheets/application.scss`:
+But also need to adjust `app/assets/stylesheets/application.scss`:
 ```css
 @import "bootstrap";
 ```
 
-And also added: 
+And also added to `app/assets/javascripts/application.js`: 
 
 ```javascript
 //= require jquery_ujs
