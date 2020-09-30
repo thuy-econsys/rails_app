@@ -1,24 +1,42 @@
-# README
+# Devise
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```bash
+rails generate devise:install
+rails generate devise User
+rails db:migrate
+rails generate devise:views:bootstrap_templates
+```
 
-Things you may want to cover:
+Normally the views generator is `rails generate devise:views` but there's a gem that automates Bootstrap styling to Devise templates, `devise-bootstrap-views`, so the rails generator is `rails generate devise:views:bootstrap_templates`.
 
-* Ruby version
+# Styling
 
-* System dependencies
+Gemfiles added for Bootstrap styling: 
 
-* Configuration
+```gemfile
+gem 'bootstrap'
+gem 'jquery-rails'
+gem 'jquery-turbolinks'
+gem 'devise-bootstrap-views', '~> 1.0'
+```
 
-* Database creation
+But also need to adjust `rails_app/app/assets/stylesheets/application.scss`:
+```css
+@import "bootstrap";
+```
 
-* Database initialization
+And also added: 
 
-* How to run the test suite
+```javascript
+//= require jquery_ujs
+//= require popper
+//= require jquery3
+//= require jquery.turbolinks
+//= require bootstrap-sprockets
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+# DB
 
-* Deployment instructions
-
-* ...
+```bash
+psql -h $PG_HOST -U $PG_USERNAME -p $PG_PORT $PG_DBNAME
+```
