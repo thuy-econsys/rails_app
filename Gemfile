@@ -11,7 +11,11 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 # Use the C implementation of SCSS for stylesheets due to deprecation of sass-rails
 gem 'sassc-rails'
-gem 'bootstrap-sass'
+gem 'bootstrap'
+# Bootstrap Javascript depends on jQuery
+gem 'jquery-rails'
+# Bootstrap dropdowns rely on JavaScript and Turbolinks
+gem 'jquery-turbolinks'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
