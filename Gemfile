@@ -16,6 +16,8 @@ gem 'bootstrap'
 gem 'jquery-rails'
 # Bootstrap dropdowns rely on JavaScript and Turbolinks
 gem 'jquery-turbolinks'
+# Devise Views customizations
+gem 'devise-bootstrap-views', '~> 1.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -35,6 +37,8 @@ gem 'jbuilder', '~> 2.5'
 
 # Authentication
 gem 'devise'
+# Support for internationalized views
+gem 'devise-i18n'
 
 # Authorization
 # gem 'cancancan'
