@@ -20,12 +20,12 @@ gem 'jquery-turbolinks'
 gem 'devise-bootstrap-views', '~> 1.0'
 ```
 
-But also need to adjust `rails_app/app/assets/stylesheets/application.scss`:
+But also need to adjust `app/assets/stylesheets/application.scss`:
 ```css
 @import "bootstrap";
 ```
 
-And also added: 
+And also added to `app/assets/javascripts/application.js`: 
 
 ```javascript
 //= require jquery_ujs
@@ -39,4 +39,40 @@ And also added:
 
 ```bash
 psql -h $PG_HOST -U $PG_USERNAME -p $PG_PORT $PG_DBNAME
+```
+
+# Customize User Registration
+
+Add *approved* column to Users model which defaults to false, pending Admin approval:
+```bash
+rails g migration AddApprovedToUsers approved:boolean
+```
+
+Adjust migration to include `:default => false`. Possibly consider adding `:null => false` later?
+```ruby
+class AddApprovedToUsers < ActiveRecord::Migration
+  def change
+    add_column :users, :approved, :boolean, :default => false
+  end
+end
+```
+
+Add *notes* column to Users model. Also add *notes* `<div>` to `app/views/devise/registrations/new.html.erb`:
+```bash
+rails g migration AddNotesToUsers notes:string
+```
+
+Migrate the databases:
+```bash
+rails db:migrate
+```
+
+Access Devise User Controller in order to override Devise::RegistrationsController: 
+```bash
+rails generate devise:controllers users
+```
+
+Change `devise_for :users` in the `config/routes.rb` file to:
+```ruby
+devise_for :users, :controllers => { registrations: 'registrations' }
 ```
