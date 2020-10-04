@@ -9,11 +9,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-
   # POST /resource
   def create
       super
-      UserMailer.admin_approval_email(@user).deliver_now
+      AdminMailer.with(user: @user).admin_approval_email.deliver
   end
 
   # GET /resource/edit
