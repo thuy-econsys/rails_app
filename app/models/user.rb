@@ -4,10 +4,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, 
          :recoverable, :rememberable, :validatable, :trackable
 
-  # Override methods and disallow User to self approve
+  # Override Devise::Models::Authenticatable methods
   def active_for_authentication? 
     super && approved? 
   end 
+  # TODO troubleshoot how this communicates with config/locals/devise.en.yml to generate correct message
+    # en.devise.failure.unauthenticated i/o en.devise.registrations.user.signed_up_bot_not_approved
+    # en.devise.failure:  i/o en.devise.failure.not_approved
+    # en.devise.failure.user.not_approved
   def inactive_message 
     approved? ? super : :not_approved
   end
