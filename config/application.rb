@@ -29,5 +29,8 @@ module RailsApp
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Define location of ActionMailer::Preview class
+    config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
   end
 end
