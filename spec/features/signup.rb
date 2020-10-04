@@ -6,11 +6,12 @@ feature 'Sign up' do
   context 'when sign up is successful' do
     scenario 'redirects to home' do
       sign_up(test_user)
-      expect(current_path).to eq('/')
+      expect(current_path).to eq('/users/sign_in')
     end
     scenario 'has correct content' do
       sign_up(test_user)
-      expect(page).to have_content('Welcome! You have signed up successfully.')
+      expect(page).to have_content('Log in')
+      expect(page).to have_content('You need to sign in or sign up before continuing.')
     end
   end
 
