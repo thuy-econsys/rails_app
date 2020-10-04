@@ -4,7 +4,7 @@ feature 'Sign up' do
   let(:test_user) { attributes_for(:user) }
 
   context 'when sign up is successful' do
-    scenario 'redirects to home' do
+    scenario 'redirects to log in page' do
       sign_up(test_user)
       expect(current_path).to eq('/users/sign_in')
     end
