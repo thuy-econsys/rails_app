@@ -26,7 +26,7 @@ feature 'User login' do
     end
     scenario "returns alert of pending admin approval" do
       log_in(user_info)
-      expect(page).to have_content("You have signed up successfully but your account has not been approved by your administrator yet.")
+      expect(page).to have_content("Your account has not been approved by your administrator yet.")
     end
     scenario "has correct content" do
       log_in(user_info)
