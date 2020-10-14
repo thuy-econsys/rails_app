@@ -12,7 +12,7 @@ feature 'Sign up' do
       sign_up(test_user)
       expect(page).to have_content('Log in')
       expect(page).to have_content('You need to sign in or sign up before continuing.')
-      # correct content
+      # FIXME should be:
       # expect(page).to have_content("You have signed up successfully but your account has not been approved by your administrator yet.")
     end
   end
