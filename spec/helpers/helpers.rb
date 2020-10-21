@@ -6,6 +6,7 @@ module TestHelper
     fill_in(:user_email, :with => user[:email])
     fill_in(:user_password, :with => user[:password])
     fill_in(:user_password_confirmation, :with => user[:password_confirmation])
+    fill_in(:user_notes, :with => user[:notes])
     click_button('Sign up')
   end
 
