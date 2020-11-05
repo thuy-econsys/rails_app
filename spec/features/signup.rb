@@ -8,9 +8,13 @@ feature 'Sign up' do
       sign_up(test_user)
       expect(current_path).to eq('/')
     end
-    scenario 'has correct content' do
+    scenario 'has successful sign-up notice' do
       sign_up(test_user)
-      expect(page).to have_content('Welcome! You have signed up successfully.')
+      expect(page).to have_css('p.notice', :text => 'Welcome! You have signed up successfully.')
+    end
+    scenario "has correct content" do
+      sign_up(test_user)
+      expect(page).to have_css('h1', :text => 'Home Page' )
     end
   end
 
@@ -19,12 +23,12 @@ feature 'Sign up' do
       test_user[:email] =""
       sign_up(test_user)
       expect(current_path).to eq('/users')
-      expect(page).to have_content('Sign up')
+      expect(page).to have_css('h1', :text => 'Sign up')
     end
-    scenario 'returns error message' do
+    scenario 'returns error alert' do
       test_user[:email] =""
       sign_up(test_user)
-      expect(page).to have_content('Email can\'t be blank')
+      expect(page).to have_css('div.alert li', :text => 'Email can\'t be blank')
     end
   end
 
@@ -33,12 +37,12 @@ feature 'Sign up' do
       test_user[:password_confirmation] = "wrong-password"
       sign_up(test_user)
       expect(current_path).to eq('/users')
-      expect(page).to have_content('Sign up')
+      expect(page).to have_css('h1', :text => 'Sign up')
     end
-    scenario 'returns error message' do
+    scenario 'returns error alert' do
       test_user[:password_confirmation] = "wrong-password"
       sign_up(test_user)
-      expect(page).to have_content('Password confirmation doesn\'t match Password')
+      expect(page).to have_css('div.alert li', :text => 'Password confirmation doesn\'t match Password')
     end
   end
 end
