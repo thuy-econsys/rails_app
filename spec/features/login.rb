@@ -4,6 +4,12 @@ feature 'User login' do
   let!(:unapproved_user) { create(:user) }
   let!(:approved_user) { create(:approved_user) }
 
+  scenario 'is able to visit new_user_session_path' do
+    visit new_user_session_path
+    expect(current_path).to eq('/users/sign_in')
+    expect(page).to have_css('h1', :text => 'Log in')
+  end
+  
   context "when user is approved" do
     scenario "redirects to home page" do
       log_in(approved_user)

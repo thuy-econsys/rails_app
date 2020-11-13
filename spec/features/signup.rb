@@ -3,6 +3,12 @@ require 'rails_helper'
 feature 'Sign up' do
   let(:test_user) { attributes_for(:user) }
 
+  scenario 'is able to visit new_user_registration_path' do
+    visit new_user_registration_path
+    expect(current_path).to eq('/users/sign_up')
+    expect(page).to have_css('h1', :text => 'Sign up')    
+  end
+
   context 'when sign up is successful' do
     scenario 'redirects to sign-in page' do
       sign_up(test_user)
