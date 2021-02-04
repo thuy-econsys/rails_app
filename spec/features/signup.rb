@@ -16,10 +16,7 @@ feature 'Sign up' do
     end
     scenario 'has successful sign-up notice' do
       sign_up(test_user)
-      expect(page).to have_css('p.alert', :text => 'You need to sign in or sign up before continuing.')
-      # FIXME should be:
-      # expect(page).to have_content("You have signed up successfully but your account has not been approved by your administrator yet.")
-      # expect(page).to have_css('p.notice', :text => 'You have signed up successfully but your account has not been approved by your administrator yet.')
+      expect(page).to have_css('p.notice', :text => 'You have signed up successfully but your account has not been approved by your administrator yet.')
     end
     scenario "has correct content" do
       sign_up(test_user)
