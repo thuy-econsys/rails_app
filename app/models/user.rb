@@ -4,16 +4,24 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, 
          :recoverable, :rememberable, :validatable, :trackable
 
-  # Devise email_regexp doesn't appear to work (Devise calls on validates_format_of)
-  validates_format_of :email,
-    with: /\A(([a-z0-9][\w\.\-]{0,62}[a-z0-9])@(([a-z0-9][a-z0-9\-]{0,62}[a-z0-9]\.){1,8})([a-z]{2,63}))\z/i, 
-    message: 'must be a valid address.'
-  validates_format_of :password,
-    with: /\A(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}\z/, 
-    message: 'must include 1 uppercase, 1 lowercase, 1 digit and 1 special character.'
-  validates_format_of :phone,
-    with: /\A[+]?[1]?[ ]?([\(]?([0-9]{3})[\)]?[ \.\-]?([0-9]{3})[ \-\.]?([0-9]{4})[ ]?(;|#|x|extension|ext)?[ ]?([0-9]{0,6}))\z/i, 
-    message: 'needs to be a valid number.'
+  # opt for custom validation over validates_format_of for Devise as validates_format_of:
+    # validates even when there's no field present in edits
+    # causes non-valid fields created prior to implementing validations to fail, ie password
+  validate :phone_input, :password_input
+  
+  def password_input
+    if password.present? && !password.match(/\A(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).*\z/)
+      errors.add(:password, 'must include 1 uppercase, 1 lowercase, 1 digit and 1 special character.')
+    end
+    # return if password.blank? || password =~ /\A(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).*\z/
+
+    # errors.add :password, 'must include 1 uppercase, 1 lowercase, 1 digit and 1 special character.'
+  end
+  def phone_input
+    if phone.present? && !phone.match(/\A[+]?[1]?[ \.\-]?([\(]?([0-9]{3})[\)]?[ \.\-]?([0-9]{3})[ \-\.]?([0-9]{4})[ ]?(;|#|x|extension|ext)?[ ]?([0-9]{0,6}))\z/i)
+      errors.add(:phone, 'needs to be a valid number')
+    end
+  end
 
   # Override Devise::Models::Authenticatable methods
   def active_for_authentication? 
