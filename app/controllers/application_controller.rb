@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   
   protected
     
-  #FIXME alternative solution for 'approved' attribute as this might allow user to self approve
   def configure_permitted_parameters 
     added_attrs = [:notes, :phone]
     devise_parameter_sanitizer.permit(:sign_up, keys: added_attrs)
