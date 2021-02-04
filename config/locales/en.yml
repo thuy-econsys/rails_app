@@ -30,4 +30,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  pages: 
+    edit: 
+      back: "Back"
+      update: "Update"
+      title: "Edit"
+    index: 
+      title: "Dashboard"
