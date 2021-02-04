@@ -71,10 +71,14 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   # binstub for RSpec test runner for faster boot times via Spring
   gem 'spring-commands-rspec'
+  # Preview email in browser instead of sending it
+  gem 'letter_opener'
 end
 
 group :test do
   gem 'capybara'
+  # one-liners to test common Rails functionality
+  gem 'shoulda-matchers', '~> 4.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
