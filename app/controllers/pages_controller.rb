@@ -14,8 +14,10 @@ class PagesController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
+        users = User.all
         format.html { redirect_to dashboard_url, notice: 'User was successfully updated.' }
-        format.json { render :index, status: :ok, location: @user }
+        # format.json { render :index, status: :ok }
+        format.json { render json: users, status: :ok } # FIXME not sure if this or above is better
       else
         format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
