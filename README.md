@@ -9,9 +9,13 @@ rails generate devise:views:bootstrap_templates
 
 Normally the views generator is `rails generate devise:views` but there's a gem that automates Bootstrap styling to Devise templates, `devise-bootstrap-views`, so the rails generator is `rails generate devise:views:bootstrap_templates`.
 
+# CanCan
+
+
+
 # Styling
 
-Gemfiles added for Bootstrap styling: 
+Very basic Bootstrap styling which needs these gems:
 
 ```gemfile
 gem 'bootstrap'
@@ -37,12 +41,35 @@ And also added to `app/assets/javascripts/application.js`:
 
 # DB
 
+If there's a db connection error upon starting Rails server, run `pg_ctl status` to make sure your PostgreSQL server is running. If it's not running, start it up: 
+```bash
+pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log start
+```
+
+If you've gone over my Wiki for [setting up PostgreSQL](https://github.com/thuy-econsys/rails_app/wiki/PostgreSQL-Setup) and set the **PGDATA** _environment variable_, no need to include option `-D` which establishes the location of your _data directory_. Option `-l` is for establishing location of PostgreSQL server logs, but unlike option `-D` is not necessary. 
+
 ```bash
 psql -h $PG_HOST -U $PG_USERNAME -p $PG_PORT $PG_DBNAME
 ```
 
+[`config/database.yml`](https://github.com/thuy-econsys/rails_app/blob/master/config/database.yml) contains configurations for your Rails project's database. It relies on _environment variables_ so in your terminal, run the following scripts, replacing the angle-bracketed values with your username, password and database: 
 ```bash
-pg_ctl -l /usr/local/var/log/postgres.log
+$ cat << EOF >> ~/.bash_profile
+> export PG_USERNAME=<user_name>
+> export PG_PASSWORD=<password>
+> export PG_DBNAME=<db_name>
+> export PG_HOST=localhost
+> export PG_PORT=5432
+> EOF
+
+$ source ~/.bash_profile
+```
+
+If you're on Windows, checkout Microsoft's documentation for [changing _environment variables_ in **PowerShell**](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables?view=powershell-7.1#using-and-changing-environment-variables).
+
+Run seeding script in [`db/seeds.rb`](https://github.com/thuy-econsys/rails_app/blob/master/db/seeds.rb) to generate users to play with:
+```ruby
+rails db:seed
 ```
 
 # Customize User Registration
@@ -78,10 +105,11 @@ rails generate devise:controllers users
 
 Change `devise_for :users` in the `config/routes.rb` file to:
 ```ruby
-devise_for :users, :controllers => { registrations: 'users/registrations' }
+devise_for :users, path: "account", :controllers => { registrations: 'users/registrations' }
 ```
 
-TODO 
+Note that _path_ is **account** to avoid any conflict with Administrative edits of User from Dashboard. 
+
 
 # Mailer
 
