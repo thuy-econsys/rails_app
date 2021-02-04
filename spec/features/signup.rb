@@ -3,14 +3,24 @@ require 'rails_helper'
 feature 'Sign up' do
   let(:test_user) { attributes_for(:user) }
 
+  scenario 'is able to visit new_user_registration_path' do
+    visit new_user_registration_path
+    expect(current_path).to eq('/users/sign_up')
+    expect(page).to have_css('h1', :text => 'Sign up')    
+  end
+
   context 'when sign up is successful' do
-    scenario 'redirects to home' do
+    scenario 'redirects to sign-in page' do
       sign_up(test_user)
-      expect(current_path).to eq('/')
+      expect(current_path).to eq('/users/sign_in')
     end
-    scenario 'has correct content' do
+    scenario 'has successful sign-up notice' do
       sign_up(test_user)
-      expect(page).to have_content('Welcome! You have signed up successfully.')
+      expect(page).to have_css('p.notice', :text => 'You have signed up successfully but your account has not been approved by your administrator yet.')
+    end
+    scenario "has correct content" do
+      sign_up(test_user)
+      expect(page).to have_css('h1', :text => 'Log in')
     end
   end
 
@@ -19,12 +29,12 @@ feature 'Sign up' do
       test_user[:email] =""
       sign_up(test_user)
       expect(current_path).to eq('/users')
-      expect(page).to have_content('Sign up')
+      expect(page).to have_css('h1', :text => 'Sign up')
     end
-    scenario 'returns error message' do
+    scenario 'returns error alert' do
       test_user[:email] =""
       sign_up(test_user)
-      expect(page).to have_content('Email can\'t be blank')
+      expect(page).to have_css('div.alert li', :text => 'Email can\'t be blank')
     end
   end
 
@@ -33,12 +43,12 @@ feature 'Sign up' do
       test_user[:password_confirmation] = "wrong-password"
       sign_up(test_user)
       expect(current_path).to eq('/users')
-      expect(page).to have_content('Sign up')
+      expect(page).to have_css('h1', :text => 'Sign up')
     end
-    scenario 'returns error message' do
+    scenario 'returns error alert' do
       test_user[:password_confirmation] = "wrong-password"
       sign_up(test_user)
-      expect(page).to have_content('Password confirmation doesn\'t match Password')
+      expect(page).to have_css('div.alert li', :text => 'Password confirmation doesn\'t match Password')
     end
   end
 end
