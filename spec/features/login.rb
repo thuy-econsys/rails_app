@@ -6,7 +6,7 @@ feature 'User login' do
 
   scenario 'is able to visit new_user_session_path' do
     visit new_user_session_path
-    expect(current_path).to eq('/users/sign_in')
+    expect(current_path).to eq('/account/sign_in')
     expect(page).to have_css('h1', :text => 'Log in')
   end
   
@@ -28,7 +28,7 @@ feature 'User login' do
   context "when user is unapproved" do
     scenario "stays on the sign-in page" do
       log_in(unapproved_user)
-      expect(current_path).to eq("/users/sign_in")
+      expect(current_path).to eq("/account/sign_in")
     end
     scenario "returns alert of pending admin approval" do
       log_in(unapproved_user)
@@ -44,7 +44,7 @@ feature 'User login' do
     scenario "stays on sign-in page" do
       approved_user.email = "wrong_email@gmail.com"
       log_in(approved_user)
-      expect(current_path).to eq("/users/sign_in")
+      expect(current_path).to eq("/account/sign_in")
       expect(page).to have_css('h1', :text => 'Log in')
     end
     scenario "returns error alert" do
@@ -58,7 +58,7 @@ feature 'User login' do
     scenario 'stays on sign-in page' do
       approved_user.password = "wrongpassword"
       log_in(approved_user)
-      expect(current_path).to eq("/users/sign_in")
+      expect(current_path).to eq("/account/sign_in")
       expect(page).to have_css('h1', :text => 'Log in')
     end
     scenario "returns error alert" do

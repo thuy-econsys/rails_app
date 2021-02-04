@@ -1,0 +1,36 @@
+<h3><%= t('.title') %> <%= :user.to_s.capitalize %> <%= @user.id %></h3>
+
+  <ul>
+    <li>Email: <%= @user.email %></li>
+    <li>Phone: <%= @user.phone %></li>
+    <li>Notes: <%= @user.notes %></li>
+  </ul>
+
+<%= form_for(@user, url: user_path) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <h4>Status</h4>
+      <%= f.label :approved, for: "user_approved_true", class: "radio-inline", value: "Approved" %>
+        <%= f.radio_button :approved, true %>
+      <%= f.label :approved, for: "user_approved_false", class: "radio-inline", value: "Unapproved" %>
+        <%= f.radio_button :approved, false %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit t('.update'), class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<%= link_to 'Destroy', user_path(@user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %> <br>
+
+<%= link_to t('.back'), :back %>

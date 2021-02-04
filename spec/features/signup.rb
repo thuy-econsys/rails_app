@@ -5,14 +5,14 @@ feature 'Sign up' do
 
   scenario 'is able to visit new_user_registration_path' do
     visit new_user_registration_path
-    expect(current_path).to eq('/users/sign_up')
+    expect(current_path).to eq('/account/sign_up')
     expect(page).to have_css('h1', :text => 'Sign up')    
   end
 
   context 'when sign up is successful' do
     scenario 'redirects to sign-in page' do
       sign_up(test_user)
-      expect(current_path).to eq('/users/sign_in')
+      expect(current_path).to eq('/account/sign_in')
     end
     scenario 'has successful sign-up notice' do
       sign_up(test_user)
@@ -28,7 +28,7 @@ feature 'Sign up' do
     scenario 'redirects to users path sign up page' do
       test_user[:email] =""
       sign_up(test_user)
-      expect(current_path).to eq('/users')
+      expect(current_path).to eq('/account')
       expect(page).to have_css('h1', :text => 'Sign up')
     end
     scenario 'returns error alert' do
@@ -42,7 +42,7 @@ feature 'Sign up' do
     scenario 'redirects to users path sign up page' do
       test_user[:password_confirmation] = "wrong-password"
       sign_up(test_user)
-      expect(current_path).to eq('/users')
+      expect(current_path).to eq('/account')
       expect(page).to have_css('h1', :text => 'Sign up')
     end
     scenario 'returns error alert' do
