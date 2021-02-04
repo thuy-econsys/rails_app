@@ -1,6 +1,9 @@
-<ul>
+<h1><%= t('.title') %></h1>
+
   <% @users.each do |user| %>
-    <li><%= user.email %></li>
-    <li><%= user.approved %></li>
+    <ul>
+      <li><%= user.email %></li>
+      <li><%= user.approved == true ? "Approved" : "Unapproved" %></li>
+    </ul>
+    <%= link_to 'Edit', edit_user_path(user), class: "btn btn-primary" %><br>
   <% end %>
-</ul>
