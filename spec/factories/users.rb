@@ -5,11 +5,16 @@ FactoryBot.define do
     password { "P@ssw0rd" }
     password_confirmation { "#{password}" }
     notes { Faker::Hacker.say_something_smart }
-
-    trait :approved_user do
+    
+    trait :user_approved do
       approved { true }
     end
+    
+    trait :user_confirmed do
+      confirmed_at { DateTime.now }
+    end
 
-    factory :approved_user, traits: [:approved_user]
+    factory :approved_confirmed_user, traits: [ :user_approved, :user_confirmed ]
+    factory :unapproved_confirmed_user, traits: [ :user_confirmed ]
   end
 end
