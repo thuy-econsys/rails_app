@@ -2,8 +2,20 @@
 
   <% @users.each do |user| %>
     <ul>
-      <li><%= user.email %></li>
-      <li><%= user.approved == true ? "Approved" : "Unapproved" %></li>
+      <li><strong>Email:</strong> <%= user.email %></li>
+      <li><strong><%= user.approved == true ? "Approved" : "Unapproved" %></strong></li>
+      <% if !user.confirmed_at.nil? && user.unconfirmed_email.nil? %>
+        <li><strong>Email confirmed:</strong> <%= user.confirmed_at %></li>
+      <% else %>
+        <li><strong>Email confirmation sent:</strong> <%= user.confirmation_sent_at %></li>
+      <% end %>
+      <% if !user.last_sign_in_at.nil? %>
+        <li><strong>Last time signed in:</strong> <%= user.last_sign_in_at %></li>
+        <li><strong>Last IP signed in:</strong> <%= user.last_sign_in_ip %></li>
+        <li><strong>Times signed in:</strong> <%= user.sign_in_count %></li>
+      <% end %>
     </ul>
-    <%= link_to 'Edit', edit_user_path(user), class: "btn btn-primary" %><br>
+    <%= link_to t('.update'), edit_user_path(user), class: "btn btn-primary" %><br>
   <% end %>
+
+  <%= link_to t('.back'), :back %>
