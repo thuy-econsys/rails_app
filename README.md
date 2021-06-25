@@ -20,6 +20,8 @@ end
 
 # CanCan
 
+At the moment, anybody can go to the Dashboard page and change a user's approval status and/or delete a user. The next step is to implement some _authorization_ solutions so that only Administrators can update a user's approval status as well as delete a user.
+
 TODO after establishing an Administrator, setup **CanCan** to authorize specific pages users can access or actions they can perform.
 
 # DB
@@ -31,7 +33,7 @@ pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log start
 
 If you've gone over my Wiki for [setting up PostgreSQL](https://github.com/thuy-econsys/rails_app/wiki/PostgreSQL-Setup) and set the **PGDATA** _environment variable_, no need to include option `-D` which establishes the location of your _data directory_. Option `-l` is for establishing location of PostgreSQL server logs, but unlike option `-D` is not necessary. 
 
-[`config/database.yml`](https://github.com/thuy-econsys/rails_app/blob/master/config/database.yml) contains configurations for your Rails project's database. It relies on _environment variables_ so in your terminal, run the following scripts, replacing the angle-bracketed values with your username, password and database: 
+[`config/database.yml`](https://github.com/thuy-econsys/rails_app/blob/master/config/database.yml) contains database configurations. It relies on _environment variables_ so in terminal, run the following scripts, replacing the angle-bracketed values with your username, password and database: 
 ```bash
 $ cat << EOF >> ~/.bash_profile
 > export PG_USERNAME=<user_name>
@@ -77,7 +79,15 @@ And also added to `app/assets/javascripts/application.js`:
 //= require bootstrap-sprockets
 ```
 
-Normally the views generator is `rails generate devise:views` but with the gem, **devise-bootstrap-views**, run `rails generate devise:views:bootstrap_templates` instead to get some instant Bootstrap styling.
+Normally the views generator is `rails generate devise:views`, but with the gem, **devise-bootstrap-views** installed, running `rails generate devise:views:bootstrap_templates` returns some Bootstrap-styled Rails scaffolding.
 
 # Mailer
 
+One of the first steps to _hardening_ Devise is to enable emails being sent for email update in `config/initializers/devise.rb`. Devise defaults to disabling that function. 
+```ruby
+config.send_email_changed_notification = true
+```
+
+## Issues
+
+TODO unconfirmed emails still allowed to login? is that result expected?
