@@ -24,10 +24,10 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'thuy@devise.mail'
 
   # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
+  config.mailer = 'DeviseMailer'
 
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
@@ -129,10 +129,10 @@ Devise.setup do |config|
   # config.pepper = '8850cb209043c2d638dc5de35944405fa23da09c4e25e41c3ee560d7e7ad72f4c4f04834e3460d42bfb6161b8812f6e855602ccdcc394c0dc75b7a63e42aab2f'
 
   # Send a notification to the original email when the user's email is changed.
-  # config.send_email_changed_notification = false
+  config.send_email_changed_notification = true
 
   # Send a notification email when the user's password is changed.
-  # config.send_password_change_notification = false
+  config.send_password_change_notification = true
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -151,7 +151,7 @@ Devise.setup do |config|
   # their account can't be confirmed with the token any more.
   # Default is nil, meaning there is no restriction on how long a user can take
   # before confirming their account.
-  # config.confirm_within = 3.days
+  config.confirm_within = 3.days
 
   # If true, requires any email changes to be confirmed (exactly the same way as
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
@@ -180,9 +180,7 @@ Devise.setup do |config|
   # Range for password length.
   config.password_length = 8..128
 
-  # Email regex used to validate email formats. It simply asserts that
-  # one (and only one) @ exists in the given string. This is mainly
-  # to give user feedback and not to assert the e-mail validity.
+  # Email regex used to validate email formats.
   config.email_regexp = /\A(([a-z0-9][\w\.\-]{0,62}[a-z0-9])@(([a-z0-9][a-z0-9\-]{0,62}[a-z0-9]\.){1,8})([a-z]{2,63}))\z/i
 
   # ==> Configuration for :timeoutable
