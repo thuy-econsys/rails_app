@@ -33,7 +33,9 @@ en:
   pages: 
     edit: 
       back: "Back"
-      update: "Update"
       title: "Edit"
+      update: "Update"
     index: 
+      back: "Back"
       title: "Dashboard"
+      update: "Edit"
