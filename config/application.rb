@@ -32,5 +32,10 @@ module RailsApp
 
     # Define location of ActionMailer::Preview class
     config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
+    
+    # https://github.com/omniauth/omniauth#integrating-omniauth-into-your-rails-api
+    config.session_store :cookie_store, key: '_interslice_session'
+    config.middleware.use ActionDispatch::Cookies # Required for all session management
+    config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
   end
 end
