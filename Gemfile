@@ -11,6 +11,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 # Use the C implementation of SCSS for stylesheets due to deprecation of sass-rails
 gem 'sassc-rails'
+
 gem 'bootstrap'
 # Bootstrap Javascript depends on jQuery
 gem 'jquery-rails'
@@ -18,36 +19,34 @@ gem 'jquery-rails'
 gem 'jquery-turbolinks'
 # Devise Views customizations
 gem 'devise-bootstrap-views', '~> 1.0'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'mini_racer', platforms: :ruby
-
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 
 # Authentication
 gem 'devise'
 # Support for internationalized views
 gem 'devise-i18n'
+# 3rd-party credentials authentication, possibly not necessary but just in case...
+gem 'omniauth'
+# for OmniAuth 2.0+ https://github.com/cookpad/omniauth-rails_csrf_protection
+# gem 'omniauth-rails_csrf_protection'
+
+gem 'omniauth-google-oauth2'
+# OmniAuth 1.0 compatible port of the previously available OmniAuth CAS strategy
+# gem 'omniauth-cas'
 
 # Authorization
 # gem 'cancancan'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
