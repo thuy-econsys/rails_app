@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable, 
-         :recoverable, :rememberable, :validatable, :trackable
+  # :confirmable, :lockable, :timeoutable
+  devise :registerable, :database_authenticatable,
+        :recoverable, :rememberable, :validatable, :trackable,
+        :omniauthable, omniauth_providers: [:google_oauth2] 
 
   # opt for custom validation over validates_format_of for Devise as validates_format_of:
     # validates even when there's no field present in edits
@@ -20,6 +21,23 @@ class User < ApplicationRecord
   def phone_input
     if phone.present? && !phone.match(/\A[+]?[1]?[ \.\-]?([\(]?([0-9]{3})[\)]?[ \.\-]?([0-9]{3})[ \-\.]?([0-9]{4})[ ]?(;|#|x|extension|ext)?[ ]?([0-9]{0,6}))\z/i)
       errors.add(:phone, 'needs to be a valid number')
+    end
+  end
+
+  def self.from_omniauth(auth)
+    byebug
+    
+    # where(provider: auth.provider, uid: auth.uid).first_or_create { |user| }
+    where(email: auth[:email]).first_or_create do |user|
+      user.email = auth[:email] # auth.info.email
+
+      # ensure only EconSys domain allowed
+      return nil unless user.email =~ /@econsys.com\z/
+
+      user.password = Devise.friendly_token[0,20]
+      # If you are using confirmable and the provider(s) you use validate emails, 
+      # uncomment the line below to skip the confirmation emails.
+      # user.skip_confirmation!
     end
   end
 
