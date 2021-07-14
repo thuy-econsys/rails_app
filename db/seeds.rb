@@ -18,6 +18,14 @@ users = [
     approved: true,
     phone: Faker::PhoneNumber.phone_number,
     notes: Faker::Hacker.say_something_smart
+  },
+  # for testing OmniAuth SSO
+  {
+    email: 'thuy.ngo@econsys.com',
+    password: 'P@ssw0rd',
+    approved: true,
+    uid: ENV["GCP_OAUTH_UID"],
+    provider: 'google_oauth2'
   }
 ]
 
@@ -30,5 +38,4 @@ users.each do |user_data|
   end
   
   user.save!(validate: false)
-  user_data[:id] = user.id
 end
