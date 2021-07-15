@@ -5,8 +5,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token, only: :google_oauth2
 
   def google_oauth2
-    user = User.from_omniauth(google_params)
-    byebug
+    user = User.from_omniauth(google_params) # debug with auth
+
     if user.present?
       sign_out_all_scopes
       flash[:success] = t 'devise.omniauth_callbacks.success', kind: 'Google'
@@ -40,10 +40,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   private
 
+  # restricting which info from OmniAuth hash can be accessed
   def google_params
     @google_params ||= {
-      uid: auth.uid,
-      email:auth.info.email
+      # uid: auth.uid,
+      # provider: auth.provider,
+      email: auth.info.email
     }
   end
 

@@ -25,23 +25,23 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(auth)
-    byebug
-    
-    # where(provider: auth.provider, uid: auth.uid).first_or_create { |user| }
     where(email: auth[:email]).first_or_create do |user|
-      user.email = auth[:email] # auth.info.email
-
-      # ensure only EconSys domain allowed
-      return nil unless user.email =~ /@econsys.com\z/
-
+      user.email = auth[:email] #auth.info.email
       user.password = Devise.friendly_token[0,20]
+
       # If you are using confirmable and the provider(s) you use validate emails, 
       # uncomment the line below to skip the confirmation emails.
       # user.skip_confirmation!
+      
+      # ensure only EconSys domain allowed
+      # FIXME? GCP auto redirects to 403
+      # if !(user.email =~ /@econsys.com\z/).nil?
+      #   user.save
+      # end
     end
   end
 
-  # Override Devise::Models::Authenticatable methods
+# Override Devise::Models::Authenticatable methods
   def active_for_authentication? 
     super && approved? 
   end 
