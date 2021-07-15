@@ -43,6 +43,7 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <%= link_to 'Sign up', new_user_registration_path, class: "dropdown-item" %>
                 <%= link_to 'Log in', new_user_session_path, class: "dropdown-item" %>
+                <%= link_to 'Authenticate with Google!', '/account/auth/google_oauth2', class: "dropdown-item" %>
               </div>
             <% end %>
           </li>
