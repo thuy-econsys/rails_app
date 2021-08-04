@@ -68,6 +68,8 @@ group :development do
   gem 'spring-commands-rspec'
   # Preview email in browser instead of sending it
   gem 'letter_opener'
+  #  check for gem vulnerabilities
+  gem 'bundler-audit', require: false
   #  static analysis tool checking for security vulnerabilities
   gem 'brakeman'
 end
