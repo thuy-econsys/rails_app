@@ -6,7 +6,7 @@ Notes here are for Mac OS and
 
 This app limits access for new users who have successfully signed up, keeping them in an `unapproved` state until an Administrator approves them. After [setting up Devise](https://github.com/thuy-econsys/rails_app/wiki/Devise), an *approved* column was generated:
 ```bash
-rails generate migration AddApprovedToUsers approved:boolean
+$ rails generate migration AddApprovedToUsers approved:boolean
 ```
 
 Migration file adjusted to include `:default => false, :null => false`.
@@ -26,12 +26,12 @@ TODO after establishing an Administrator, setup **CanCan** to authorize specific
 
 If there's a db connection error upon starting Rails server, run `pg_ctl status` to make sure your PostgreSQL server is running. If it's not running, start it up: 
 ```bash
-pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log start
+$ pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log start
 ```
 
 If you've gone over my Wiki for [setting up PostgreSQL](https://github.com/thuy-econsys/rails_app/wiki/PostgreSQL-Setup) and set the **PGDATA** _environment variable_, no need to include option `-D` which establishes the location of your _data directory_. Option `-l` is for establishing location of PostgreSQL server logs, but unlike option `-D` is not necessary. 
 
-[`config/database.yml`](https://github.com/thuy-econsys/rails_app/blob/master/config/database.yml) contains configurations for your Rails project's database. It relies on _environment variables_ so in your terminal, run the following scripts, replacing the angle-bracketed values with your username, password and database: 
+[`config/database.yml`](https://github.com/thuy-econsys/rails_app/blob/master/config/database.yml) contains configurations for your Rails project's database. It relies on System's _environment variables_ so in your terminal, run the following scripts, replacing the angle-bracketed values with your username, password and database: 
 ```bash
 $ cat << EOF >> ~/.bash_profile
 > export PG_USERNAME=<user_name>
@@ -48,7 +48,7 @@ For Windows, checkout Microsoft's documentation for [changing _environment varia
 
 Run seeding script in [`db/seeds.rb`](https://github.com/thuy-econsys/rails_app/blob/master/db/seeds.rb) to generate users to play with:
 ```ruby
-rails db:seed
+$ rails db:seed
 ```
 
 # Views & Styling
@@ -79,5 +79,20 @@ And also added to `app/assets/javascripts/application.js`:
 
 Normally the views generator is `rails generate devise:views` but with the gem, **devise-bootstrap-views**, run `rails generate devise:views:bootstrap_templates` instead to get some instant Bootstrap styling.
 
-# Mailer
+# Security
 
+Gems for security scanning set in Gemfile to `require` option to false as they're only command-line tools that don't need to be loaded each time Rails starts up.
+
+[Brakeman](https://github.com/presidentbeef/brakeman) - Ruby on Rails Static Analysis Security Tool
+
+option `-d` outputs more debugging info. `-o` sets output to the console and a JSON file, respectively. `--color` adds color to output.
+```bash
+$ brakeman -d --color -o /dev/stdout -o brakeman.json
+```
+
+[bundler-audit](https://rubydoc.info/gems/bundler-audit/frames) - check for vulnerable versions of Gems
+
+*update* the database that `bundle-audit` uses and *check* the `Gemfile.lock` for security vulnerabilities:
+```bash
+$ bundle-audit check --update
+```
