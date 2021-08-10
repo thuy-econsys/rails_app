@@ -1,20 +1,20 @@
 users = [
   { email: 'admin@email.com',
-    password: 'P@ssw0rd',
+    password: ENV["PASSWORD"],
     approved: true,
     phone: Faker::PhoneNumber.phone_number,
     notes: Faker::Hacker.say_something_smart
   },
   {
     email: Faker::Internet.unique.email,
-    password: 'P@ssw0rd',
+    password: ENV["PASSWORD"],
     approved: false,
     phone: Faker::PhoneNumber.phone_number,
     notes: Faker::Hacker.say_something_smart
   },
   {
     email: Faker::Internet.unique.email,
-    password: 'P@ssw0rd',
+    password: ENV["PASSWORD"],
     approved: true,
     phone: Faker::PhoneNumber.phone_number,
     notes: Faker::Hacker.say_something_smart
@@ -30,5 +30,4 @@ users.each do |user_data|
   end
   
   user.save!(validate: false)
-  user_data[:id] = user.id
 end
