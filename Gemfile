@@ -5,10 +5,11 @@ ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.1'
+gem 'actionpack'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.3.8' #'~> 3.11'
 # Use the C implementation of SCSS for stylesheets due to deprecation of sass-rails
 gem 'sassc-rails'
 gem 'bootstrap'
@@ -55,6 +56,10 @@ group :development, :test do
   gem 'faker'
   # Use deprecated rspec methods, assigns and assert_template
   gem 'rails-controller-testing'
+  #  patch validation checking for gem security vulnerabilities
+  gem 'bundler-audit', require: false
+  #  static analysis tool checking for security vulnerabilities
+  gem 'brakeman', require: false
 end
 
 group :development do
@@ -68,10 +73,6 @@ group :development do
   gem 'spring-commands-rspec'
   # Preview email in browser instead of sending it
   gem 'letter_opener'
-  #  check for gem vulnerabilities
-  gem 'bundler-audit', require: false
-  #  static analysis tool checking for security vulnerabilities
-  gem 'brakeman'
 end
 
 group :test do
